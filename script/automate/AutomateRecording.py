@@ -1,4 +1,5 @@
-from random import *
+import random
+import json 
 
 class AutomateRecording:
     automatId = 0
@@ -27,3 +28,6 @@ class AutomateRecording:
         self.salmonellaLevel += random.randint(-5,5)
         self.eColiLevel += random.randint(-5,5)
         self.listeriaLevel += random.randint(-5,5)
+
+    def toJSON(self):
+        return json.dumps(self.__dict__)

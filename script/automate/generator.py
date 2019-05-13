@@ -1,21 +1,19 @@
 import socket
-import json 
+import sys
 from AutomateRecording import AutomateRecording
 
-automate = AutomateRecording(1)
 
-
-print(json.dumps(props(automate)))
-
-# serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# serverSocket.bind(('', 8002))
-# serverSocket.listen(5)
-
-# runServer = true
-
-# while runServer:
-#     clientSocket, clientInfo = serverSocket.accept()
-#     clientSocket.send(b"Je viens d'accepter la connexion")
-#     clientSocket.close()
-
-# serverSocket.close()
+if not (len(sys.argv) == 3):
+    print("Need to give automate ID and PORT as ARGV!")
+else:
+    serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    serverSocket.bind(('', int(sys.argv[2])))
+    serverSocket.listen(5)
+    runServer = True
+    print("Start automate " + sys.argv[1] + "at " + sys.argv[2])
+    while runServer:
+        clientSocket, clientInfo = serverSocket.accept()
+        automate = AutomateRecording(int(sys.argv[1]))
+        clientSocket.send(automate.toJSON())
+        clientSocket.close()
+    serverSocket.close()
