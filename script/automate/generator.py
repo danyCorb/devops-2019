@@ -10,7 +10,7 @@ else:
     serverSocket.bind(('', int(sys.argv[2])))
     serverSocket.listen(5)
     runServer = True
-    print("Start automate " + sys.argv[1] + "at " + sys.argv[2])
+    print("Start automate " + sys.argv[1] + " at " + sys.argv[2])
     while runServer:
         clientSocket, clientInfo = serverSocket.accept()
         automate = AutomateRecording(int(sys.argv[1]))
