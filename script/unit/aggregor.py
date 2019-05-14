@@ -10,6 +10,7 @@ import socket
 
 def generateFile(datas, unitId):
     fileDatas = {
+        "unitId": unitId,
         "date": datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
         "automate": datas
     }
