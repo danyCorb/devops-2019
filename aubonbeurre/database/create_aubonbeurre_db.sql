@@ -5,6 +5,7 @@ use au_bon_beurre;
 drop table if exists unit;
 create table unit (
 	id int(11) not null primary key auto_increment,
+	`name` varchar(255) not null,
     `number` int(1) not null,
 	location enum('Sector1', 'Sector2', 'Sector3')
 );
