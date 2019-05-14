@@ -1,7 +1,9 @@
 import socket
 import sys
 from AutomateRecording import AutomateRecording
-
+ 
+# argv 1 : automate id
+# argv 2 : automate port
 
 if not (len(sys.argv) == 3):
     print("Need to give automate ID and PORT as ARGV!")
@@ -14,6 +16,6 @@ else:
     while runServer:
         clientSocket, clientInfo = serverSocket.accept()
         automate = AutomateRecording(int(sys.argv[1]))
-        clientSocket.send(automate.toJSON())
+        clientSocket.send(str.encode(automate.toJSON()))
         clientSocket.close()
     serverSocket.close()
