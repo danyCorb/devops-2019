@@ -1,31 +1,14 @@
 use au_bon_beurre;
 
 -- create tables
-
-drop table if exists unit;
-create table unit (
-	id int(11) not null primary key auto_increment,
-	`name` varchar(255) not null,
-    `number` int(1) not null,
-	location enum('Sector1', 'Sector2', 'Sector3')
-);
-
-drop table if exists unit_recording;
-create table unit_recording (
-	id int(11) not null primary key auto_increment,
-    record_date date not null,
-    
-	unit_id int(11) not null,
-    foreign key (unit_id) references unit(id)
-);
+SET FOREIGN_KEY_CHECKS=0;
 
 drop table if exists automate;
 create table automate (
 	id int(11) not null primary key auto_increment,
     `type` int(8) not null,
-    `number` int(8) not null,
-    
     unit_id int(11) not null,
+    `number` int(8) not null,
     foreign key (unit_id) references unit(id)
 );
 
@@ -48,6 +31,24 @@ create table automate_recording (
     listeria_level int not null
 );
 
+
+drop table if exists unit;
+create table unit (
+    id int(11) not null primary key auto_increment,
+    `name` varchar(255) not null,    
+    `number` int(1) not null,
+    location enum('Sector1', 'Sector2', 'Sector3')
+);
+
+drop table if exists unit_recording;
+create table unit_recording (
+    id int(11) not null primary key auto_increment,
+    record_date date not null,
+    unit_id int(11) not null,
+    foreign key (unit_id) references unit(id)
+);
+
+
 drop table if exists critical_level;
 create table critical_level (
 	id int(11) not null primary key auto_increment,
@@ -67,5 +68,6 @@ create table critical_level_changement (
     foreign key (new_critical_level_id) references critical_level(id),
     
     `date` date not null
-)
+);
 
+SET FOREIGN_KEY_CHECKS=1;
