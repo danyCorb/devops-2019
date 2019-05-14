@@ -22,6 +22,7 @@ drop table if exists automate;
 create table automate (
 	id int(11) not null primary key auto_increment,
     `type` int(8) not null,
+    `number` int(8) not null,
     
     unit_id int(11) not null,
     foreign key (unit_id) references unit(id)
