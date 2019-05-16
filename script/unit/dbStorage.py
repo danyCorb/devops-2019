@@ -10,32 +10,35 @@ class NoUnitFind(Exception):
 class NoInsertDo(Exception):
     pass
 
+class NoUnitRecordInsert(Exception):
+    pass
+
 def run():
     listen = True
     while listen:
         for fileName in listdir("datas"):
             with open('datas/'+fileName, 'r') as content_file:
                 fileContent = json.loads(content_file.read())
-                try:
-                    dbWrite(fileContent)
-                    os.remove('datas/'+fileName)
-                except NoInsertDo:
-                    print('Error Insert unit')
-        time.sleep(1)
+            try:
+                dbWrite(fileContent)
+                os.remove('datas/'+fileName)
+            except NoInsertDo:
+                print('Error Insert unit')
+        time.sleep(2)
 
 def dbWrite(fileContent):
     mydb = mysql.connector.connect(host="dany-corbineau.ddns.net", user="corentin.dupont", passwd="dupont.corentin", port="8001")
     try:
         unitId = getUnitId(fileContent["unitId"], mydb)
-        creaingDate = fileContent['date']
+        creatingDate = fileContent['date']
         unitRecordId = insertUnitRecord(mydb, unitId, creatingDate)
         for automateDatas in fileContent["automate"]:
-            automatId = getAutomatId(mydb, automateDatas["automatId"], unitId)
-            insertAutomateRecording(mydb, unitId, automatId, automateDatas)
+            insertAutomateRecording(mydb, unitRecordId, automateDatas)
     except NoUnitFind:
         print('No unit find in DB for '+fileContent["unitId"])
         raise NoInsertDo()
-        
+    except NoUnitRecordInsert:
+        print('No unit recorde rcv after insert!')
 
 def getUnitId(unitNumber, mydb):
     requestor = mydb.cursor()
@@ -44,36 +47,16 @@ def getUnitId(unitNumber, mydb):
     datas = requestor.fetchall()
     if len(datas) <= 0:
         raise NoUnitFind()
-    return datas[0]
+    return datas[0][0]
 
 def useDb(request):
     request.execute("use au_bon_beurre")
 
-def getAutomatId(mydb, automatNumber, unitId):
+def insertAutomateRecording(mydb, unitRecordId, datas):
+    #print(datas)
     requestor = mydb.cursor()
-    useDb(requestor)
-    requestor.execute("SELECT id FROM `automate` WHERE number="+automatNumber+' and unit_id='+unitId)
-    datas = requestor.fetchall()
-    return datas[0]
-
-def insertAutomateRecording(mydb, unitId, automatId, datas):
-    sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
-    val = [
-    ('Peter', 'Lowstreet 4'),
-    ('Amy', 'Apple st 652'),
-    ('Hannah', 'Mountain 21'),
-    ('Michael', 'Valley 345'),
-    ('Sandy', 'Ocean blvd 2'),
-    ('Betty', 'Green Grass 1'),
-    ('Richard', 'Sky st 331'),
-    ('Susan', 'One way 98'),
-    ('Vicky', 'Yellow Garden 2'),
-    ('Ben', 'Park Lane 38'),
-    ('William', 'Central st 954'),
-    ('Chuck', 'Main Road 989'),
-    ('Viola', 'Sideway 1633')
-    ]
-    requestor.executemany(sql, val)
+    sql = "INSERT INTO automate_recording (`automate_id`,`unit_recording_id`,`tank_temperature`,`external_temperature`,`milk_tank_weight`,`final_product_weight`,`ph_measurement`,`k_pos_measurement`,`na_cl_concentration`,`salmonella_level`,`e_coli_level`,`listeria_level`) VALUES ("+str(datas["automatId"])+","+str(unitRecordId)+","+str(datas["tankTemperature"])+","+str(datas["externalTemperature"])+","+str(datas["milkTankWeight"])+","+str(+datas["finalProductWeight"])+","+str(datas["phMeasurement"])+","+str(datas["kPosMeasurement"])+","+str(datas["naClConcentration"])+","+str(datas["salmonellaLevel"])+","+str(datas["eColiLevel"])+","+str(datas["listeriaLevel"])+")"
+    requestor.execute(sql)
     mydb.commit()
 
 def insertUnitRecord(mydb, unitId, date):
@@ -84,6 +67,10 @@ def insertUnitRecord(mydb, unitId, date):
     requestor.execute(sql, val)
     mydb.commit()
     requestor2 = mydb.cursor()
-    requestor2.execute("SELECT id FROM `unit_recording` WHERE unit_id="+unitId+" and record_date="+date)
-    return requestor2.fetchall()[0]
+    request = "SELECT id FROM `unit_recording` WHERE unit_id="+str(unitId)+" and record_date=\""+str(date)+"\""
+    requestor2.execute(request)
+    datas = requestor2.fetchall() 
+    if len(datas) <= 0:
+        raise NoUnitRecordInsert()
+    return datas[0][0]
 run()
