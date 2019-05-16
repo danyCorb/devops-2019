@@ -24,7 +24,6 @@ create table automate_recording (
     tank_temperature float(4,4) not null,
     external_temperature float(4,4) not null,
     milk_tank_weight float(8,4) not null,
-    final_product_weight float(8,4) not null,
     ph_measurement float(4,4) not null,
     k_pos_measurement int not null,
     na_cl_concentration float not null,
