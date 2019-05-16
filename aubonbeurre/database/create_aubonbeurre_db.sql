@@ -43,7 +43,7 @@ create table unit (
 drop table if exists unit_recording;
 create table unit_recording (
     id int(11) not null primary key auto_increment,
-    record_date date not null,
+    record_date DATETIME not null,
     unit_id int(11) not null,
     foreign key (unit_id) references unit(id)
 );
