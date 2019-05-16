@@ -18,6 +18,8 @@ create table automate_recording (
     
     unit_recording_id int(11) not null,
     foreign key (unit_recording_id) references unit_recording(id),
+    automate_id int(11) not null,
+    foreign key (automate_id) references automate(id),
     
     tank_temperature float(4,4) not null,
     external_temperature float(4,4) not null,
