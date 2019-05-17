@@ -1,10 +1,11 @@
 let express = require('express')
 let mysql = require('sync-mysql');
-
+const cors = require('cors')
 
 // Launch server
 
 let app = express()
+app.use(cors()) // enable CORS
 let port = process.env.PORT || 3009
 
 
@@ -45,7 +46,7 @@ Date.prototype.toMysqlFormat = function() {
 // Routes
 
 app.get('/', function (req, res) {
-    res.send('Hello World!')
+    res.send('/complete-unit-recording/:number')
 })
 
 app.get('/complete-unit-recording/:number', async (req, res) => {
