@@ -10,3 +10,8 @@ services:
     ports:
       - "8080:8080"
     command: npm run serve
+  nginx-proxy:
+    build: ./nginx
+    ports:
+      - "80:80"
+      - "3009:3009"
