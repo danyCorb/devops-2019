@@ -4,7 +4,7 @@ services:
     build: ./aubonbeurre-api
     ports:
       - "3009:3009"
-    command: npm run server.js
+    command: node server.js
   vue-server:
     build: ./aubonbeurre-dataviz
     ports:

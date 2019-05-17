@@ -7,9 +7,7 @@ let mysql = require('sync-mysql');
 let app = express()
 let port = process.env.PORT || 3009
 
-app.listen(port, function () {
-    console.log(`Example app listening on port ${port} !`)
-})
+
 
 // params mysql server connection
 
@@ -111,6 +109,9 @@ app.get('/complete-unit-recording/:number', async (req, res) => {
       
 }) 
 
+app.listen(port, function () {
+    console.log(`Au_bon_beurre Api app listening on port ${port} !`)
+})
 
 
  

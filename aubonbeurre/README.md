@@ -8,6 +8,6 @@ Serveur client Vue
 # aubonbeurre-api
 Api serveur pour les données
 
-**commande de lancement** : `npm run server.js`
+**commande de lancement** : `node server.js`
 **port** : `3009`
 **dossier** : `aubonbeurre-api`
