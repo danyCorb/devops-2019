@@ -1,15 +1,14 @@
 let express = require('express')
 let mysql = require('sync-mysql');
-
+const cors = require('cors')
 
 // Launch server
 
 let app = express()
+app.use(cors()) // enable CORS
 let port = process.env.PORT || 3009
 
-app.listen(port, function () {
-    console.log(`Example app listening on port ${port} !`)
-})
+
 
 // params mysql server connection
 
@@ -47,7 +46,7 @@ Date.prototype.toMysqlFormat = function() {
 // Routes
 
 app.get('/', function (req, res) {
-    res.send('Hello World!')
+    res.send('/complete-unit-recording/:number')
 })
 
 app.get('/complete-unit-recording/:number', async (req, res) => {
@@ -111,6 +110,9 @@ app.get('/complete-unit-recording/:number', async (req, res) => {
       
 }) 
 
+app.listen(port, function () {
+    console.log(`Au_bon_beurre Api app listening on port ${port} !`)
+})
 
 
  
