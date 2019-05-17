@@ -1,0 +1,12 @@
+version: '2'
+services:
+  api-server:
+    build: ./aubonbeurre-api
+    ports:
+      - "3009:3009"
+    command: npm run server.js
+  vue-server:
+    build: ./aubonbeurre-dataviz
+    ports:
+      - "8080:8080"
+    command: npm run serve
