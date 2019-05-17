@@ -2,8 +2,6 @@ version: '2'
 services:
   api-server:
     build: ./aubonbeurre-api
-    ports:
-      - "3010:3009"
     command: node server.js
   vue-server:
     build: ./aubonbeurre-dataviz
