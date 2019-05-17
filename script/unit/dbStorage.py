@@ -1,6 +1,7 @@
 import mysql.connector
 import time
 import json
+import sys
 from os import listdir
 import os
 
@@ -14,20 +15,23 @@ class NoUnitRecordInsert(Exception):
     pass
 
 def run():
+    if len(sys.argv) < 5:
+        print('Need args : dbUrl username password port')
+
     listen = True
     while listen:
         for fileName in listdir("datas"):
             with open('datas/'+fileName, 'r') as content_file:
                 fileContent = json.loads(content_file.read())
             try:
-                dbWrite(fileContent)
+                dbWrite(fileContent, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
                 os.remove('datas/'+fileName)
             except NoInsertDo:
                 print('Error Insert unit')
         time.sleep(2)
 
-def dbWrite(fileContent):
-    mydb = mysql.connector.connect(host="dany-corbineau.ddns.net", user="corentin.dupont", passwd="dupont.corentin", port="8001")
+def dbWrite(fileContent, host, user, passwd, port):
+    mydb = mysql.connector.connect(host=host, user=user, passwd=passwd, port=port)
     try:
         unitId = getUnitId(fileContent["unitId"], mydb)
         creatingDate = fileContent['date']
@@ -53,11 +57,16 @@ def useDb(request):
     request.execute("use au_bon_beurre")
 
 def insertAutomateRecording(mydb, unitRecordId, datas):
-    #print(datas)
     requestor = mydb.cursor()
-    sql = "INSERT INTO automate_recording (`automate_id`,`unit_recording_id`,`tank_temperature`,`external_temperature`,`milk_tank_weight`,`final_product_weight`,`ph_measurement`,`k_pos_measurement`,`na_cl_concentration`,`salmonella_level`,`e_coli_level`,`listeria_level`) VALUES ("+str(datas["automatId"])+","+str(unitRecordId)+","+str(datas["tankTemperature"])+","+str(datas["externalTemperature"])+","+str(datas["milkTankWeight"])+","+str(+datas["finalProductWeight"])+","+str(datas["phMeasurement"])+","+str(datas["kPosMeasurement"])+","+str(datas["naClConcentration"])+","+str(datas["salmonellaLevel"])+","+str(datas["eColiLevel"])+","+str(datas["listeriaLevel"])+")"
-    requestor.execute(sql)
-    mydb.commit()
+    try:
+        sql = "INSERT INTO automate_recording (`automate_id`,`unit_recording_id`,`tank_temperature`,`external_temperature`,`milk_tank_weight`,`final_product_weight`,`ph_measurement`,`k_pos_measurement`,`na_cl_concentration`,`salmonella_level`,`e_coli_level`,`listeria_level`) VALUES ("+str(datas["automatId"])+","+str(unitRecordId)+","+str(datas["tankTemperature"])+","+str(datas["externalTemperature"])+","+str(datas["milkTankWeight"])+","+str(+datas["finalProductWeight"])+","+str(datas["phMeasurement"])+","+str(datas["kPosMeasurement"])+","+str(datas["naClConcentration"])+","+str(datas["salmonellaLevel"])+","+str(datas["eColiLevel"])+","+str(datas["listeriaLevel"])+")"
+        requestor.execute(sql)
+        mydb.commit()
+    except:
+        print('#############""')
+        print(datas)
+        print('#############""')
+        print(sys.exc_info())
 
 def insertUnitRecord(mydb, unitId, date):
     requestor = mydb.cursor()
