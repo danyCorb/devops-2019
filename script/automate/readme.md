@@ -1,4 +1,4 @@
-# Scripte automate
+# Script automate
 ## Presentation
 Ce dossier regroupe tout ce qui concerne les automates.
 ## Organisation
