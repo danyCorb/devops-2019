@@ -3,25 +3,34 @@ import { Line } from 'vue-chartjs'
 
 export default {
   extends: Line,
-  props: {
-
-    datacollection: {
-      type: Object,
-      default: null
-    },
-    options: {
-      type: Object,
-      default: null
-    }
-  },
+  props: ["datacollection", "options"],
   data: () => ({
     
   }),
   mounted () {
-      console.log(`[LineChartComponent] - ${this.datacollection} - ${this.options}`)
-      this.renderChart(this.datacollection, this.options)
+      console.log(`[LineChartComponent] - ${this.chartData} - ${this.options}`)
+      this.renderLineChart()
     
   },
+  computed: {
+    chartData: function(){
+      return this.datacollection
+    }
+  },
+  
+
+  methods: {
+    renderLineChart: function() {
+      this.renderChart(this.chartData, this.options)
+    }
+  },
+
+  watch: {
+    datacollection: function() {
+      this.$data._chart.destroy();
+      this.renderLineChart();
+    }
+  }
 }
 </script>
 

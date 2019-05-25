@@ -12,8 +12,8 @@
         selectedAutomateNumber: 1,
         unitNumbers: [1,2,3,4,5],
         automateNumbers: [1,2,3,4,5, 6, 7, 8, 9, 10],
-        completeUnitRecording: [],
-        datacollections: [],
+        // completeUnitRecording: [],
+        // datacollections: [],
         items: [
           { message: 'Foo' },
           { message: 'Bar' }
@@ -45,16 +45,25 @@
       
     },
     computed: {
-      // datacollections: function() {
-      //   return this.getAllDataCollections(this.getMockedCompleteUnitRecording(), this.selectedAutomateNumber)
-      // },
+
+      datacollections: {
+        // accesseur
+        get: function () {
+          return this.getAllDataCollections(this.completeUnitRecording, this.selectedAutomateNumber)
+        },
+        set: function (newValue) {
+          return newValue
+        }
+      },
+
+      completeUnitRecording: {
+        get: function () {
+          return this.getMockedCompleteUnitRecording();
+        }
+      }
     },
     mounted () {
       console.log('[DataVisualizerVue] - mounted')
-
-      
-      this.getData()
-      
     },
     methods: {
       // reload data when user change unit with select element
@@ -70,6 +79,8 @@
         console.log(`[DataVisualizerVue] - automate changed`)
         
         this.selectedAutomateNumber = Number(event.target.value)
+
+        console.log(`[DataVisualizerVue]`, this.selectedAutomateNumber);
         this.getData()
       },
 
@@ -82,7 +93,7 @@
 
       // get mocked data
       getMockedCompleteUnitRecording() {
-        this.completeUnitRecording = [
+        return [
           {
             number: 1,
             type: 1,
@@ -147,7 +158,7 @@
       },
 
       getAllDataCollections(completeUnitRecording, automateNumber) {
-        console.log(`[DataVisualizer] - complete unit recording`)
+        console.log(`[DataVisualizer] - complete unit recording`, automateNumber)
         console.log(completeUnitRecording)
 
         // Get only data collections for one automate
@@ -182,11 +193,11 @@
         console.log(`[DataVisualizer] - datacollections`)
         console.log(datacollections)
 
-        this.datacollections = datacollections
-
+        // this.datacollections = datacollections
+        return datacollections
       },
 
-      getData(){
+      getData () {
 
         // Calculate this every 60 seconds, or every automate or unit change
         // this.getCompleteUnitRecording(this.selectedUnitNumber)
@@ -228,6 +239,8 @@
       >
       </LineChart>
     </div>
+
+    <p v-for="(datacollection, i) in this.datacollections"  v-bind:key="i">{{datacollection.datasets[0]}}</p>
     
     
 
