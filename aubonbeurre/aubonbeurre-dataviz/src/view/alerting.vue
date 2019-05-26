@@ -1,12 +1,14 @@
 <template>
-    <ul>
-        <select @change="updateData($event)">
+    <div>
+         <select @change="updateData($event)">
             <option v-for="alertes_type in alertes_types" :key="alertes_type.name" v-bind:value="alertes_type.name">{{alertes_type.name}}</option>
         </select>
-        <li v-for="alerte in alertes" :key="alerte.id">
-            <AlertCard v-bind:alerte="{...alerte, field_name:field_value}"/>
-        </li>
-    </ul>
+        <ul>
+            <li v-for="alerte in alertes" :key="alerte.id">
+                <AlertCard v-bind:alerte="{...alerte, field_name:field_value}"/>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
@@ -42,15 +44,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
     li {
         list-style-type: none;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 10px;
-    }
-    li AlertCard {
         width: 20vw;
+        margin: 10px;
     }
 </style>
