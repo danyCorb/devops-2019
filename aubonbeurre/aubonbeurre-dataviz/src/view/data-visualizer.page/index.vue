@@ -46,21 +46,38 @@
     },
     computed: {
 
-      datacollections: {
-        // accesseur
-        get: function () {
-          return this.getAllDataCollections(this.completeUnitRecording, this.selectedAutomateNumber)
-        },
-        set: function (newValue) {
-          return newValue
-        }
-      },
+      // datacollections: {
+      //   // accesseur
+      //   get: function () {
+      //     return this.getAllDataCollections(this.completeUnitRecording, this.selectedAutomateNumber)
+      //   },
+      //   // set: function (newValue) {
+      //   //   return newValue
+      //   // }
+      // },
 
       completeUnitRecording: {
         get: function () {
           return this.getMockedCompleteUnitRecording();
         }
       }
+    },
+    asyncComputed: {
+      datacollections: {
+        
+        get () {
+          return new Promise((resolve, reject) => {
+            APIService.getInstance().getAutomateRecordsFromUnit(this.unitNumber).then( data => {
+              resolve(this.getAllDataCollections(data, this.selectedAutomateNumber))
+            })
+          })
+        },
+        default: []
+        
+      }
+      // completeUnitRecording() {
+      //   return APIService.getInstance().getAutomateRecordsFromUnit(this.unitNumber);
+      // }
     },
     mounted () {
       console.log('[DataVisualizerVue] - mounted')
@@ -71,7 +88,6 @@
         console.log(`[DataVisualizerVue] - unit changed ${JSON.stringify(event.target.value)}`)
 
         this.selectedUnitNumber = Number(event.target.value)
-        this.getData()
         
       },
       // change chart data to correspond to the selected automate
@@ -81,14 +97,11 @@
         this.selectedAutomateNumber = Number(event.target.value)
 
         console.log(`[DataVisualizerVue]`, this.selectedAutomateNumber);
-        this.getData()
       },
 
       // get data from API
       getCompleteUnitRecording(unitNumber) {
-        APIService.getInstance().getAutomateRecordsFromUnit(unitNumber).then( data => {
-          console.log(`[DataVisualizerVue] - getAutomateRecordsFromUnit - data - ${data}`)
-        })
+        APIService.getInstance().getAutomateRecordsFromUnit(unitNumber);
       },
 
       // get mocked data
