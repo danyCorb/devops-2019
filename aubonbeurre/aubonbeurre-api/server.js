@@ -16,7 +16,7 @@ let connection = new mysql({
   host     : 'vps691279.ovh.net',
   user     : 'corentin.dupont',
   password : 'dupont.corentin',
-  port: 8001,
+  port: 3306,
   database: 'au_bon_beurre',
 });
 
@@ -64,12 +64,12 @@ app.get('/complete-unit-recording/:number', async (req, res) => {
         // Get unit records
         const min_record_date = new Date((new Date()).getTime() - 1000 * 60 * 60);
 
-        const getUnitRecordings_REQUEST = `SELECT * FROM unit_recording WHERE id=${unit.id} AND record_date>'${min_record_date.toMysqlFormat()}'`
+        const getUnitRecordings_REQUEST = `SELECT * FROM unit_recording WHERE unit_id=${unit.id} AND record_date>'${min_record_date.toMysqlFormat()}'`
         console.log(`[complete unit recording] - try to execute query - ${getUnitRecordings_REQUEST} `)
 
         const unit_recordings = connection.query(getUnitRecordings_REQUEST);
 
-        console.log(`[complete unit recording] - unit recordings - ${unit_recordings}`)
+        console.log(`[complete unit recording] - unit recordings - ${unit_recordings.length}`)
 
         if (!unit_recordings.length) {
             res.send([])
@@ -80,7 +80,7 @@ app.get('/complete-unit-recording/:number', async (req, res) => {
         console.log(`[complete unit recording] - try to execute query - ${getAutomates_REQUEST} `)
 
         const unit_automates = connection.query(getAutomates_REQUEST)
-        console.log(`[complete unit recording] - unit automates - ${unit_automates}`)
+        console.log(`[complete unit recording] - unit automates - ${unit_automates.length}`)
         
         // Get automate records
         const unit_recording_ids = unit_recordings.map( el => el.id );
@@ -94,19 +94,19 @@ app.get('/complete-unit-recording/:number', async (req, res) => {
         console.log(`[complete unit recording] - try to execute query - ${getAutomateRecords_REQUEST} `)
 
         const unit_automates_records = connection.query(getAutomateRecords_REQUEST)
-        console.log(`[complete unit recording] - unit automate records - ${unit_automates_records}`)
+        console.log(`[complete unit recording] - unit automate records - ${unit_automates_records.length}`)
 
         // group by automate
         const complete_unit_recording = unit_automates.map( automate => {
             const records = unit_automates_records.filter( unit_automate_record => unit_automate_record.automate_id === automate.id);
             return {...automate, records}
         })        
+        res.send(complete_unit_recording);
 
     } catch (error) {
-        console.error(error)
+        res.send("Error ", error)
     }
     
-    res.send(complete_unit_recording);
       
 }) 
 
