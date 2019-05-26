@@ -45,17 +45,6 @@
       
     },
     computed: {
-
-      // datacollections: {
-      //   // accesseur
-      //   get: function () {
-      //     return this.getAllDataCollections(this.completeUnitRecording, this.selectedAutomateNumber)
-      //   },
-      //   // set: function (newValue) {
-      //   //   return newValue
-      //   // }
-      // },
-
       completeUnitRecording: {
         get: function () {
           return this.getMockedCompleteUnitRecording();
@@ -67,7 +56,7 @@
         
         get () {
           return new Promise((resolve, reject) => {
-            APIService.getInstance().getAutomateRecordsFromUnit(this.unitNumber).then( data => {
+            APIService.getInstance().getAutomateRecordsFromUnit(this.selectedUnitNumber).then( data => {
               resolve(this.getAllDataCollections(data, this.selectedAutomateNumber))
             })
           })
@@ -75,12 +64,17 @@
         default: []
         
       }
-      // completeUnitRecording() {
-      //   return APIService.getInstance().getAutomateRecordsFromUnit(this.unitNumber);
-      // }
     },
     mounted () {
       console.log('[DataVisualizerVue] - mounted')
+
+      this.$nextTick(function () {
+            window.setInterval(() => {
+              console.log("Bonsoir")
+                this.datacollections;
+            },1000);
+        })
+    
     },
     methods: {
       // reload data when user change unit with select element
