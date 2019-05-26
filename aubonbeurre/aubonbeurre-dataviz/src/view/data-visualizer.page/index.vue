@@ -10,31 +10,16 @@
       return {
         selectedUnitNumber: 1,
         selectedAutomateNumber: 1,
-        unitNumbers: [1,2,3,4,5],
-        automateNumbers: [1,2,3,4,5, 6, 7, 8, 9, 10],
-        // completeUnitRecording: [],
-        // datacollections: [],
-        items: [
-          { message: 'Foo' },
-          { message: 'Bar' }
-        ],
-
-        chartdata: {
-          datacollection: {
-            labels: ['January', 'February'],
-            datasets: [
-              {
-                label: 'Data One',
-                backgroundColor: '#f87979',
-                data: [40, 20]
-              }
-            ]
-          }
-        },
+        unitNumbers: [1],
+        automateNumbers: [1,2,3,4,5],
+        refresher: false,
+        // Charts options
         options: {
           responsive: true,
-          maintainAspectRatio: false
+          maintainAspectRatio: false,
+          animation: false,
         },
+        // Charts style
         myStyles: {
           height: '150px',
           width: '45%',
@@ -45,6 +30,7 @@
       
     },
     computed: {
+      // Mock the data of one unit
       completeUnitRecording: {
         get: function () {
           return this.getMockedCompleteUnitRecording();
@@ -52,10 +38,13 @@
       }
     },
     asyncComputed: {
+
+      // Contain all data from one unit. This value is refreshed every minutes in mounted method thanks to the refresher boolean
       datacollections: {
         
         get () {
           return new Promise((resolve, reject) => {
+            const fakeRefresher = !this.refresher
             APIService.getInstance().getAutomateRecordsFromUnit(this.selectedUnitNumber).then( data => {
               resolve(this.getAllDataCollections(data, this.selectedAutomateNumber))
             })
@@ -68,12 +57,13 @@
     mounted () {
       console.log('[DataVisualizerVue] - mounted')
 
+      // Modify a value that used to calculate data in graphs every minutes. 
       this.$nextTick(function () {
-            window.setInterval(() => {
-              console.log("Bonsoir")
-                this.datacollections;
-            },1000);
-        })
+          window.setInterval(() => {
+            console.log("Bonsoir")
+            this.refreshAPIData()
+          },60000);
+      })
     
     },
     methods: {
@@ -82,6 +72,7 @@
         console.log(`[DataVisualizerVue] - unit changed ${JSON.stringify(event.target.value)}`)
 
         this.selectedUnitNumber = Number(event.target.value)
+        this.refreshAPIData()
         
       },
       // change chart data to correspond to the selected automate
@@ -89,13 +80,12 @@
         console.log(`[DataVisualizerVue] - automate changed`)
         
         this.selectedAutomateNumber = Number(event.target.value)
-
-        console.log(`[DataVisualizerVue]`, this.selectedAutomateNumber);
+        this.refreshAPIData()
       },
 
-      // get data from API
-      getCompleteUnitRecording(unitNumber) {
-        APIService.getInstance().getAutomateRecordsFromUnit(unitNumber);
+
+      refreshAPIData(){
+        this.refresher = !this.refresher;
       },
 
       // get mocked data
@@ -164,6 +154,7 @@
         ]
       },
 
+      // format data for the charts, for one automate
       getAllDataCollections(completeUnitRecording, automateNumber) {
         console.log(`[DataVisualizer] - complete unit recording`, automateNumber)
         console.log(completeUnitRecording)
@@ -176,8 +167,10 @@
 
         console.log(`Object keys - ${ Object.keys(completeAutomateRecord.records[0])}`)
 
+        const keys = Object.keys(completeAutomateRecord.records[0]).filter(key => !key.includes('id'))
+
         // generate the data set for each attribute
-        const attributeDataSets = Object.keys(completeAutomateRecord.records[0]).map(key => {
+        const attributeDataSets = keys.map(key => {
           const data = completeAutomateRecord.records.map(record => record[key])
           const label = key
           const backgroundColor = '#f87979'
@@ -203,16 +196,6 @@
         // this.datacollections = datacollections
         return datacollections
       },
-
-      getData () {
-
-        // Calculate this every 60 seconds, or every automate or unit change
-        // this.getCompleteUnitRecording(this.selectedUnitNumber)
-        this.getMockedCompleteUnitRecording()
-        // after, get the data collections
-        this.getAllDataCollections(this.completeUnitRecording, this.selectedAutomateNumber)
-      }
-
     }
   }
     
@@ -245,10 +228,7 @@
         v-bind:key="i"
       >
       </LineChart>
-    </div>
-
-    <p v-for="(datacollection, i) in this.datacollections"  v-bind:key="i">{{datacollection.datasets[0]}}</p>
-    
+    </div>    
     
 
   </section>
@@ -256,7 +236,7 @@
 
 <style>
   .data-visualizer-page {
-    
+
   }
 
   #form {
@@ -287,5 +267,6 @@
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
+    color: white;
   }
 </style>
