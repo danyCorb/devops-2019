@@ -12,4 +12,4 @@ Cette partie de projet permet de gérer la partie création des données, aggré
 ## Docker compose
 * Lance 5 automates sur les ports 8001, 8002, 8003, 8004,8005
 * Lance 1 unit d'aggregation connecté au 5 automates avec un volume bind sur le dossier datas
-* Lance 1 unit de dbStorage avec un volume bind sur le dossier datas. La base de données ce trouve sur dany-corbineau.ddns.net:8001 
+* Lance 1 unit de dbStorage avec un volume bind sur le dossier datas. La base de données ce trouve sur vps691279.ovh.net 
