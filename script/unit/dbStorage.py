@@ -38,6 +38,7 @@ def dbWrite(fileContent, host, user, passwd, port):
         unitRecordId = insertUnitRecord(mydb, unitId, creatingDate)
         for automateDatas in fileContent["automate"]:
             insertAutomateRecording(mydb, unitRecordId, automateDatas)
+        mydb.close()
     except NoUnitFind:
         print('No unit find in DB for '+fileContent["unitId"])
         raise NoInsertDo()
