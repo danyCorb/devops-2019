@@ -8,7 +8,7 @@ export default {
     
   }),
   mounted () {
-      console.log(`[LineChartComponent] - ${this.chartData} - ${this.options}`)
+      console.log(`[LineChartComponent]`, this.chartData, this.options)
       this.renderLineChart()
     
   },

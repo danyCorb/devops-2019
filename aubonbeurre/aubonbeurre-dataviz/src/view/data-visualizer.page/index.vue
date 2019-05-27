@@ -174,14 +174,15 @@
           const data = completeAutomateRecord.records.map(record => record[key])
           const label = key
           const backgroundColor = '#f87979'
+          const pointBackgroundColor = 'blue'
 
-          return {label, backgroundColor, data}
+          return {label, backgroundColor, pointBackgroundColor, data}
         })
 
         // TO DO : CHANGE WITH RECORD DATE
         const labels = []
 
-        for (let i=1; i <= completeAutomateRecord; i++) {
+        for (let i=1; i <= completeAutomateRecord.records.length; i++) {
           labels.push(i.toString())
         }
 
