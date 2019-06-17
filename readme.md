@@ -20,6 +20,7 @@ Le projet utilise 3 briques système qui peuvent êtres utilisé sur des OS diff
 |Docker-factory|`script/docker-compose.yml`|Composée des briques pour simuler des automates et des unitées|
 |Docker-MariaDB|`database/docker-compose.yml`|Utilisé pour créer un container MariaDB avec en login corentin.dupont et mot de passe XXX (pour le mod dev)
 ## Licence
+
 Creative Common CC
 Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 3.0 France (CC BY-NC-SA 3.0 FR) 
 
