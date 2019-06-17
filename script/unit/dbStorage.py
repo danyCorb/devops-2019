@@ -14,11 +14,18 @@ class NoInsertDo(Exception):
 class NoUnitRecordInsert(Exception):
     pass
 
+def checkOutLimit(value, valMin, valMax):
+    if valMin > value or valMax < value:
+        return False
+    return True
+
+
 def run():
+    listen = True
     if len(sys.argv) < 5:
         print('Need args : dbUrl username password port')
+        listen = False
 
-    listen = True
     while listen:
         for fileName in listdir("datas"):
             with open('datas/'+fileName, 'r') as content_file:
