@@ -21,12 +21,12 @@ describe('Basic Mocha String Test', function () {
     });
 
 
- it('should return first charachter of the string', function () {
-        const date = new Date('2017-03-25T00:00:00')
+//  it('should return first charachter of the string', function () {
+//         const date = new Date('2017-03-25T00:00:00')
 
-        Date.prototype.toMysqlFormat = function() {
-            return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
-        };
-        assert.equal(date.toMysqlFormat(), '2017-03-25 00:00:00');
-    });
+//         Date.prototype.toMysqlFormat = function() {
+//             return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+//         };
+//         assert.equal(date.toMysqlFormat(), '2017-03-25 00:00:00');
+//     });
 });
