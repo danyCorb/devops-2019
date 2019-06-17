@@ -56,8 +56,12 @@ function twoDigits(d) {
 
 // add a function to date object to be able to compare js date with mysql date
 Date.prototype.toMysqlFormat = function() {
-    return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+    return toMysqlFormat(this)
 };
+
+function toMysqlFormat(date) {
+    return date.getUTCFullYear() + "-" + twoDigits(1 + date.getUTCMonth()) + "-" + twoDigits(date.getUTCDate()) + " " + twoDigits(date.getUTCHours()) + ":" + twoDigits(date.getUTCMinutes()) + ":" + twoDigits(date.getUTCSeconds());
+}
 
 // Routes
 
@@ -141,6 +145,8 @@ app.get('/alertes-types', async (req, res) => {
 app.listen(port, function () {
     console.log(`Au_bon_beurre Api app listening on port ${port} !`)
 })
+
+module.exports = { getAlertRequest, twoDigits }
 
 
  
