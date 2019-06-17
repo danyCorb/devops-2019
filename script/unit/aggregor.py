@@ -10,6 +10,7 @@ import socket
 
 # argv 1 : unit id
 
+
 def generateFile(datas, unitId):
     fileDatas = {
         "unitId": unitId,
@@ -44,9 +45,10 @@ def getAutomatData(ip, port):
         return json.loads("{}")
     return json.loads("{}")
 
+getDatas = True
 if (len(sys.argv) < 2):
     print("Must set a unit number in argv!")
-    exit(1)
+    getDatas = False
 elif (len(sys.argv) > 2):
     automateConfig = []
     for i in range(2,len(sys.argv), 3) :
@@ -54,7 +56,7 @@ elif (len(sys.argv) > 2):
 else:
     with open("automate.json") as automateConfigFile:  
         automateConfig = json.load(automateConfigFile)
-getDatas = True
+
 while getDatas:
     datas = []
     for automate in automateConfig:
