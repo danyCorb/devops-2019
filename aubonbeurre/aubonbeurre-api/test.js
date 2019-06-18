@@ -1,5 +1,5 @@
 var assert = require('assert');
-const { getAlertRequest, twoDigits } = require('./server.js')
+const { getAlertRequest, twoDigits } = require('./service.js')
 
 describe('Basic Mocha String Test', function () {
 
