@@ -1,4 +1,4 @@
 export default {
-    host: 'localhost',
+    host: 'api-server',
     port: '3009'
 }
