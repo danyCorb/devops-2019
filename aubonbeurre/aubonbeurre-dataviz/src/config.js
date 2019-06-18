@@ -1,4 +1,4 @@
 export default {
-    host: 'localhost',
+    host: 'dany-corbineau.fr',
     port: '3009'
 }

@@ -14,9 +14,9 @@ let port = process.env.PORT || 3009
 // params mysql server connection
 
 let connection = new mysql({
-  host     : 'vps691279.ovh.net',
-  user     : 'corentin.dupont',
-  password : 'dupont.corentin',
+  host     : 'dany-corbineau.fr',
+  user     : 'data_vision',
+  password : 'datVisPass44',
   port: 3306,
   database: 'au_bon_beurre',
 });
@@ -101,10 +101,10 @@ app.get('/complete-unit-recording/:number', async (req, res) => {
             const records = unit_automates_records.filter( unit_automate_record => unit_automate_record.automate_id === automate.id);
             return {...automate, records}
         })        
-        res.send(complete_unit_recording);
+        res.status(200).send(complete_unit_recording);
 
     } catch (error) {
-        res.send("Error ", error)
+        res.status(500).send("Error ", error)
     }
     
       

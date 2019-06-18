@@ -1,7 +1,7 @@
 // Singleton Class
 export let APIService = ( function(){
     let instance = null;
-    const API_URL = 'http://localhost:3009'
+    const API_URL = 'http://dany-corbineau.fr:3009'
 
     // constructor
     let constructor = function(){
