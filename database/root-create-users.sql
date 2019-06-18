@@ -1,3 +1,4 @@
+USE au_bon_beurre;
 
 -- create delegate administrator 
 DROP USER IF EXISTS 'delegate_administrator'@'%';
