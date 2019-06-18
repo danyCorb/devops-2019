@@ -3,13 +3,8 @@ services:
   api-server:
     build: ./aubonbeurre-api
     command: node server.js
-  vue-server:
-    build: ./aubonbeurre-dataviz
-    ports:
-      - "8080:8080"
-    command: npm run serve
   nginx-proxy:
     build: ./nginx
     ports:
-      - "80:80"
+      - "8085:80"
       - "3009:3009"
