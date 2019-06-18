@@ -14,7 +14,7 @@ let port = process.env.PORT || 3009
 // params mysql server connection
 
 let connection = new mysql({
-  host     : 'dany-corbineau;fr',
+  host     : 'dany-corbineau.fr',
   user     : 'data_vision',
   password : 'datVisPass44',
   port: 3306,
