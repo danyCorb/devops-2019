@@ -3,33 +3,33 @@ services:
   automate1-1:
     build: ./automate
     ports:
-      - "8001:8001"
-    command: python generator.py 1 8001
+      - "9001:9001"
+    command: python generator.py 1 9001
   automate1-2:
     build: ./automate
     ports:
-      - "8002:8002"
-    command: python generator.py 2 8002
+      - "9002:9002"
+    command: python generator.py 2 9002
   automate1-3:
     build: ./automate
     ports:
-      - "8003:8003"
-    command: python generator.py 3 8003
+      - "9003:9003"
+    command: python generator.py 3 9003
   automate1-4:
     build: ./automate
     ports:
-      - "8004:8004"
-    command: python generator.py 4 8004
+      - "9004:9004"
+    command: python generator.py 4 9004
   automate1-5:
     build: ./automate
     ports:
-      - "8005:8005"
-    command: python generator.py 5 8005
+      - "9005:9005"
+    command: python generator.py 5 9005
   unit1:
     build: ./unit
     volumes:
       - unit1-data:/usr/src/datas
-    command: python aggregor.py 1 automate1-1 8001 1 automate1-2 8002 2 automate1-3 8003 3 automate1-4 8004 4 automate1-5 8005 5
+    command: python aggregor.py 1 automate1-1 9001 1 automate1-2 9002 2 automate1-3 9003 3 automate1-4 9004 4 automate1-5 9004 5
   unit1-db:
     build: ./unit
     volumes:
