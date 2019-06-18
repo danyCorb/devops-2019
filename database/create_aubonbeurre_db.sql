@@ -3,6 +3,12 @@ use au_bon_beurre;
 -- create tables
 SET FOREIGN_KEY_CHECKS=0;
 
+drop table if exists site;
+create table site (
+	id int(11) not null primary key auto_increment,
+    `name` varchar(255) not null
+);
+
 drop table if exists automate;
 create table automate (
 	id int(11) not null primary key auto_increment,
@@ -70,6 +76,16 @@ create table critical_level_changement (
     foreign key (new_critical_level_id) references critical_level(id),
     
     `date` date not null
+);
+
+drop table if exists automate_recording_insert_error;
+create table automate_recording_insert_error (
+	id int(11) not null primary key auto_increment,
+    automate_id int(11) not null,
+    foreign key (automate_id) references automate(id),
+    field_name varchar(255) not null,
+    field_bad_value float not null,
+    `date` datetime not null
 );
 
 SET FOREIGN_KEY_CHECKS=1;
