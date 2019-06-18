@@ -9,3 +9,8 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: "Ajouter le mot de passe"
+    volumes:
+      - DevOps_DataBase_Volume:/var/lib/mysql
+    
+volumes:
+   DevOps_DataBase_Volume:
