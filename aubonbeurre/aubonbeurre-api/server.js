@@ -101,10 +101,10 @@ app.get('/complete-unit-recording/:number', async (req, res) => {
             const records = unit_automates_records.filter( unit_automate_record => unit_automate_record.automate_id === automate.id);
             return {...automate, records}
         })        
-        res.send(complete_unit_recording);
+        res.status(200).send(complete_unit_recording);
 
     } catch (error) {
-        res.send("Error ", error)
+        res.status(500).send("Error ", error)
     }
     
       
