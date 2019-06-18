@@ -34,6 +34,6 @@ services:
     build: ./unit
     volumes:
       - unit1-data:/usr/src/datas
-    command: python dbStorage.py vps691279.ovh.net corentin.dupont dupont.corentin 3306
+    command: python dbStorage.py vps691279.ovh.net docker_concentrator  docConPass44 3306
 volumes:
   unit1-data:
