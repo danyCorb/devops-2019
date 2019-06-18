@@ -1,4 +1,4 @@
 export default {
-    host: 'api-server',
+    host: 'dany-corbineau.fr',
     port: '3009'
 }
