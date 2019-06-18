@@ -14,7 +14,7 @@ GRANT SELECT, INSERT ON au_bon_beurre.* TO 'docker_concentrator'@'%';
 
 -- create data vision
 DROP USER IF EXISTS 'data_vision'@'%';
-CREATE USER 'data_vision'@'%';
+CREATE USER 'data_vision'@'%' IDENTIFIED BY 'datVisPass44';
 
 GRANT SELECT ON au_bon_beurre.* TO 'data_vision'@'%';
 
