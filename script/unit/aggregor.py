@@ -12,7 +12,7 @@ import socket
 
 
 def encrypt_datas(data):
-    return data)
+    return data
 def generateFile(datas, unitId):
     fileDatas = {
         "unitId": unitId,
