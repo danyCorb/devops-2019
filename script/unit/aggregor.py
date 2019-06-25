@@ -7,15 +7,12 @@ import os
 import errno
 
 import socket
-from Crypto.PublicKey import RSA
 # argv 1 : unit id
 
 
 
 def encrypt_datas(data):
-    key = RSA.importKey(open('./keys/priv/file-priv.pem').read())
-    return key.encrypt(data)
-
+    return data)
 def generateFile(datas, unitId):
     fileDatas = {
         "unitId": unitId,

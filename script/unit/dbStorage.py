@@ -4,7 +4,6 @@ import json
 import sys
 from os import listdir
 import os
-from Crypto.PublicKey import RSA
 
 class NoUnitFind(Exception):
     pass
@@ -21,8 +20,7 @@ def checkOutLimit(value, valMin, valMax):
     return True
 
 def decrypt_datas(data):
-    key = RSA.importKey(open('./keys/priv/file-priv.pem').read())
-    return key.encrypt(data)
+    return data
 
 def run():
     listen = True
