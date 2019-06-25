@@ -11,7 +11,7 @@ services:
       MYSQL_ROOT_PASSWORD: "Ajouter le mot de passe"
     volumes:
       - DevOps_DataBase_Volume:/var/lib/mysql
-      - config/config.cnf:/etc/mysql/my.cnf
+      - /root/devops/dev-ops-2019/database/config/config.cnf:/etc/mysql/my.cnf
     
 volumes:
    DevOps_DataBase_Volume:
