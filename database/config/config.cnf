@@ -1,0 +1,3 @@
+innodb_compression_level=9
+innodb_file_format = barracuda
+innodb_file_format_max = barracuda
