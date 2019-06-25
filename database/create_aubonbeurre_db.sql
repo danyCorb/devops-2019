@@ -7,7 +7,10 @@ drop table if exists site;
 create table site (
 	id int(11) not null primary key auto_increment,
     `name` varchar(255) not null
-);
+)
+	ENGINE=InnoDB
+	PAGE_COMPRESSED=1
+    ;
 
 drop table if exists automate;
 create table automate (
@@ -16,7 +19,10 @@ create table automate (
     unit_id int(11) not null,
     `number` int(8) not null,
     foreign key (unit_id) references unit(id)
-);
+)
+	ENGINE=InnoDB
+	PAGE_COMPRESSED=1
+    ;
 
 drop table if exists automate_recording;
 create table automate_recording (
@@ -37,7 +43,10 @@ create table automate_recording (
     salmonella_level int not null,
     e_coli_level int not null,
     listeria_level int not null
-);
+)
+	ENGINE=InnoDB
+	PAGE_COMPRESSED=1
+    ;
 
 
 drop table if exists unit;
@@ -54,8 +63,10 @@ create table unit_recording (
     record_date DATETIME not null,
     unit_id int(11) not null,
     foreign key (unit_id) references unit(id)
-);
-
+)
+	ENGINE=InnoDB
+	PAGE_COMPRESSED=1
+    ;
 
 drop table if exists critical_level;
 create table critical_level (
@@ -76,16 +87,35 @@ create table critical_level_changement (
     foreign key (new_critical_level_id) references critical_level(id),
     
     `date` date not null
-);
+)
+	ENGINE=InnoDB
+	PAGE_COMPRESSED=1
+    ;
 
 drop table if exists automate_recording_insert_error;
 create table automate_recording_insert_error (
 	id int(11) not null primary key auto_increment,
     automate_id int(11) not null,
     foreign key (automate_id) references automate(id),
-    field_name varchar(255) not null,
-    field_bad_value float not null,
-    `date` datetime not null
-);
+	unit_recording_id int(11) not null,
+    foreign key (unit_recording_id) references unit_recording(id),
+    inserted_at timestamp not null default current_timestamp,
+	
+    -- same fields as automate recording table
+    tank_temperature float not null,
+    external_temperature float not null,
+    milk_tank_weight float not null,
+    final_product_weight float not null,
+    ph_measurement float not null,
+    k_pos_measurement int not null,
+    na_cl_concentration float not null,
+    salmonella_level int not null,
+    e_coli_level int not null,
+    listeria_level int not null
+    
+)
+	ENGINE=InnoDB
+	PAGE_COMPRESSED=1
+    ;
 
 SET FOREIGN_KEY_CHECKS=1;
