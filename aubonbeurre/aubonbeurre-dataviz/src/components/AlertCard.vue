@@ -19,6 +19,7 @@ export default {
 
 <style scoped>
 .alert-card {
+    min-width: 300px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
