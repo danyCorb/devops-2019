@@ -4,6 +4,7 @@ import json
 import sys
 from os import listdir
 import os
+from Crypto.PublicKey import RSA
 
 class NoUnitFind(Exception):
     pass
@@ -19,6 +20,9 @@ def checkOutLimit(value, valMin, valMax):
         return False
     return True
 
+def decrypt_datas(data):
+    key = RSA.importKey(open('./keys/priv/file-priv.pem').read())
+    return key.encrypt(data)
 
 def run():
     listen = True
@@ -29,7 +33,7 @@ def run():
     while listen:
         for fileName in listdir("datas"):
             with open('datas/'+fileName, 'r') as content_file:
-                fileContent = json.loads(content_file.read())
+                fileContent = json.loads(decrypt_datas(content_file.read()))
             try:
                 dbWrite(fileContent, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
                 os.remove('datas/'+fileName)

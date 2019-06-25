@@ -7,9 +7,14 @@ import os
 import errno
 
 import socket
-
+from Crypto.PublicKey import RSA
 # argv 1 : unit id
 
+
+
+def encrypt_datas(data):
+    key = RSA.importKey(open('./keys/priv/file-priv.pem').read())
+    return key.encrypt(data)
 
 def generateFile(datas, unitId):
     fileDatas = {
@@ -28,7 +33,7 @@ def generateFile(datas, unitId):
                 raise
 
     f = open(fileName, "w+")
-    f.write(json.dumps(fileDatas))
+    f.write(encrypt_datas(json.dumps(fileDatas)))
     f.close()
     return fileName
 
