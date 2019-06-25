@@ -55,7 +55,10 @@ create table unit (
     `name` varchar(255) not null,    
     `number` int(1) not null,
     location enum('Sector1', 'Sector2', 'Sector3')
-);
+)
+	ENGINE=InnoDB
+	PAGE_COMPRESSED=1
+;
 
 drop table if exists unit_recording;
 create table unit_recording (
@@ -74,7 +77,10 @@ create table critical_level (
     `name` varchar(255) not null,
     max_value float,
     min_value float
-);
+)
+	ENGINE=InnoDB
+	PAGE_COMPRESSED=1
+;
 
 drop table if exists critical_level_changement;
 create table critical_level_changement (
