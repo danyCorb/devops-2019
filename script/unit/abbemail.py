@@ -9,7 +9,7 @@ def sendEmail(msgBody):
     msg["To"] = "danycor2@hotmail.fr"
     msg["Subject"] = "Au Bon Beurre - Error"
     msg.attach(MIMEText(msgBody, 'plain'))
-    server = smtplib.SMTP("localhost",1025)
+    server = smtplib.SMTP("emailing",1025)
     #server = smtplib.SMTP("smtp.office365.com",587)
     #server.starttls()
     server.ehlo_or_helo_if_needed()
