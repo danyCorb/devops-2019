@@ -12,11 +12,9 @@ services:
     volumes:
       - DevOps_DataBase_Volume:/var/lib/mysql
       - /root/devops/dev-ops-2019/database/config/config.cnf:/etc/mysql/my.cnf
-      - /root/devops/dev-ops-2019/database/config/encryption.cnf:/etc/mysql/conf.d/encryption.cnf
       - /root/devops/dev-ops-2019/database/keyfile.enc:/etc/mysql/keyfile.enc
       - /root/devops/dev-ops-2019/database/keyfile.key:/etc/mysql/keyfile.key
-      - /root/devops/dev-ops-2019/database/ssl/:/etc/mysql-ssl/
-      - /root/devops/dev-ops-2019/database/config/50-server.cnf:/etc/mysql/mariadb.conf.d/50-server.cnf
+      - /root/devops/dev-ops-2019/database/ssl:/etc/mysql-ssl
     
 volumes:
    DevOps_DataBase_Volume:

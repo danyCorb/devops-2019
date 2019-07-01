@@ -1,6 +1,8 @@
 [mysqld]
 innodb_compression_level = 9
-loose-file-key-management-filename=/etc/mysql/keys.enc
+ssl-ca=/etc/mysql-ssl/ca-cert.pem
+ssl-cert=/etc/mysql-ssl/server-cert.pem
+ssl-key=/etc/mysql-ssl/server-key.pem
 
 [mariadb]
 plugin_load_add = file_key_management
