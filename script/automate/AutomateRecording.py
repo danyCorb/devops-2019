@@ -16,11 +16,13 @@ class AutomateRecording:
     listeriaLevel = 0
 
     def __init__(self, id, haveError):
-        if haveError:
-            print('Insert error')
         self.automatId += id
         self.automatType = hex(47648 + random.randint(1,4))
-        self.tankTemperature = random.uniform(100, 1000)
+        if haveError:
+            print('Insert error')
+            self.tankTemperature = random.uniform(100, 1000)
+        else:
+            self.tankTemperature = random.uniform(1, 75)
         self.externalTemperature = random.uniform(8,14)
         self.milkTankWeight = random.uniform(3512,4607)
         self.finalProductWeight = random.uniform(0,50)
