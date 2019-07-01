@@ -1,2 +1,3 @@
 [mysqld]
 innodb_compression_level = 9
+loose-file-key-management-filename=/etc/mysql/keys.enc
