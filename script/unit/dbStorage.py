@@ -19,15 +19,15 @@ class NoUnitRecordInsert(Exception):
 def checkData(data, unitId):
     if 'automatId' not in data:
         return False
-    if not checkOutLimit(data['automatId'], 1, 10):
+    if checkOutLimit(data['automatId'], 1, 10):
         return 'automate Id'
-    if not checkOutLimit(int(data['automatType'],16),int(0X0000BA20), int(0X0000BA2F)):
+    if checkOutLimit(int(data['automatType'],16),int(0X0000BA20), int(0X0000BA2F)):
         return 'automate type'
-    if not checkOutLimit(int(unitId),1, 5):
+    if checkOutLimit(int(unitId),1, 5):
         return 'unitId'
-    if not checkOutLimit(data['tankTemperature'],0, 100):
+    if checkOutLimit(data['tankTemperature'],0, 100):
         return 'tank temperature'
-    if not checkOutLimit(data['milkTankWeight'],0, 10000):
+    if checkOutLimit(data['milkTankWeight'],0, 10000):
         return 'milk tank weight'
     return True
 
