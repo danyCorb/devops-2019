@@ -1,5 +1,10 @@
 version: '2'
 services:
+  emailing:
+    image: python:rc-alpine3.9
+    ports:
+      - "1025:1025"
+    command: python -m smtpd -c DebuggingServer -n localhost:1025
   automate1-1:
     build: ./automate
     ports:
@@ -30,6 +35,10 @@ services:
     volumes:
       - unit1-data:/usr/src/datas
     command: python aggregor.py 1 automate1-1 9001 1 automate1-2 9002 2 automate1-3 9003 3 automate1-4 9004 4 automate1-5 9004 5
+    depends_on:
+      - emailing
+    links: 
+        - emailing
   unit1-db:
     build: ./unit
     volumes:
