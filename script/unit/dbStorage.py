@@ -4,6 +4,7 @@ import json
 import sys
 from os import listdir
 import os
+from abbemail import sendEmail
 
 class NoUnitFind(Exception):
     pass
@@ -14,8 +15,21 @@ class NoInsertDo(Exception):
 class NoUnitRecordInsert(Exception):
     pass
 
+def checkData(data, unitId):
+    if not checkOutLimit(data['automatId'], 1, 10):
+        return 'automate Id'
+    if not checkOutLimit(int(data['automatType'],16),int(0X0000BA20), int(0X0000BA2F)):
+        return 'automate type'
+    if not checkOutLimit(int(unitId),1, 5):
+        return 'unitId'
+    if not checkOutLimit(data['tankTemperature'],0, 100):
+        return 'tank temperature'
+    if not checkOutLimit(data['milkTankWeight'],0, 10000) or data['milkTankWeight']>10000:
+        return 'milk tank weight'
+    return True
+
 def checkOutLimit(value, valMin, valMax):
-    if valMin > value or valMax < value:
+    if valMin <= value and valMax >= value:
         return False
     return True
 
@@ -46,7 +60,14 @@ def dbWrite(fileContent, host, user, passwd, port):
         creatingDate = fileContent['date']
         unitRecordId = insertUnitRecord(mydb, unitId, creatingDate)
         for automateDatas in fileContent["automate"]:
-            insertAutomateRecording(mydb, unitRecordId, automateDatas)
+            returnedField = checkData(automateDatas, fileContent["unitId"])
+            if returnedField == True:
+                insertAutomateRecording(mydb, unitRecordId, automateDatas)
+                print('Insert Good')
+            else: 
+                insertErrorRecording(mydb, unitRecordId, automateDatas)
+                sendEmail(getErrorMsg(returnedField, fileContent["unitId"], automateDatas))
+                print('error data : '+str(automateDatas))
         mydb.close()
     except NoUnitFind:
         print('No unit find in DB for '+fileContent["unitId"])
@@ -63,6 +84,9 @@ def getUnitId(unitNumber, mydb):
         raise NoUnitFind()
     return datas[0][0]
 
+def getErrorMsg(returnedField, unitRecordId, automateDatas):
+    return 'Erreur du champ '+returnedField+'\n\n Unit-record:'+str(unitRecordId)+' Have error with datas : '+str(automateDatas)
+
 def useDb(request):
     request.execute("use au_bon_beurre")
 
@@ -70,6 +94,18 @@ def insertAutomateRecording(mydb, unitRecordId, datas):
     requestor = mydb.cursor()
     try:
         sql = "INSERT INTO automate_recording (`automate_id`,`unit_recording_id`,`tank_temperature`,`external_temperature`,`milk_tank_weight`,`final_product_weight`,`ph_measurement`,`k_pos_measurement`,`na_cl_concentration`,`salmonella_level`,`e_coli_level`,`listeria_level`) VALUES ("+str(datas["automatId"])+","+str(unitRecordId)+","+str(datas["tankTemperature"])+","+str(datas["externalTemperature"])+","+str(datas["milkTankWeight"])+","+str(+datas["finalProductWeight"])+","+str(datas["phMeasurement"])+","+str(datas["kPosMeasurement"])+","+str(datas["naClConcentration"])+","+str(datas["salmonellaLevel"])+","+str(datas["eColiLevel"])+","+str(datas["listeriaLevel"])+")"
+        requestor.execute(sql)
+        mydb.commit()
+    except:
+        print('#############""')
+        print(datas)
+        print('#############""')
+        print(sys.exc_info())
+
+def insertErrorRecording(mydb, unitRecordId, datas):
+    requestor = mydb.cursor()
+    try:
+        sql = "INSERT INTO automate_recording_insert_error (`automate_id`,`unit_recording_id`,`tank_temperature`,`external_temperature`,`milk_tank_weight`,`final_product_weight`,`ph_measurement`,`k_pos_measurement`,`na_cl_concentration`,`salmonella_level`,`e_coli_level`,`listeria_level`) VALUES ("+str(datas["automatId"])+","+str(unitRecordId)+","+str(datas["tankTemperature"])+","+str(datas["externalTemperature"])+","+str(datas["milkTankWeight"])+","+str(+datas["finalProductWeight"])+","+str(datas["phMeasurement"])+","+str(datas["kPosMeasurement"])+","+str(datas["naClConcentration"])+","+str(datas["salmonellaLevel"])+","+str(datas["eColiLevel"])+","+str(datas["listeriaLevel"])+")"
         requestor.execute(sql)
         mydb.commit()
     except:
