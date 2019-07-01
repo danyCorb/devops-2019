@@ -13,7 +13,7 @@ services:
       - DevOps_DataBase_Volume:/var/lib/mysql
       - /root/devops/dev-ops-2019/database/config/config.cnf:/etc/mysql/my.cnf
       - /root/devops/dev-ops-2019/database/config/encryption.cnf:/etc/mysql/conf.d/encryption.cnf
-      - /root/devops/dev-ops-2019/database/keys.enc:/etc/mysql/conf.d/keys.enc
+      - /root/devops/dev-ops-2019/database/keys.enc:/etc/mysql/keys.enc
     
 volumes:
    DevOps_DataBase_Volume:
