@@ -17,6 +17,6 @@ GRANT SELECT, INSERT ON au_bon_beurre.* TO 'docker_concentrator'@'%';
 DROP USER IF EXISTS 'data_vision'@'%';
 CREATE USER 'data_vision'@'%' IDENTIFIED BY 'datVisPass44';
 
-GRANT SELECT ON au_bon_beurre.* TO 'data_vision'@'%';
+GRANT SELECT ON au_bon_beurre.* TO 'data_vision'@'%' REQUIRE SSL;
 
 FLUSH PRIVILEGES;
