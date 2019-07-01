@@ -26,12 +26,12 @@ def checkData(data, unitId):
         return 'unitId'
     if not checkOutLimit(data['tankTemperature'],0, 100):
         return 'tank temperature'
-    if not checkOutLimit(data['milkTankWeight'],0, 10000) or data['milkTankWeight']>10000:
+    if not checkOutLimit(data['milkTankWeight'],0, 10000):
         return 'milk tank weight'
     return True
 
 def checkOutLimit(value, valMin, valMax):
-    if valMin <= value and valMax >= value:
+    if valMin < value and valMax > value:
         return False
     return True
 
