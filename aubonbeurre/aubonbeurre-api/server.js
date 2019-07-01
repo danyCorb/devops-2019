@@ -1,6 +1,7 @@
 let express = require('express')
 let mysql = require('sync-mysql');
 const cors = require('cors')
+const fs = require('fs')
 
 const { getAlertRequest, twoDigits } = require('./service.js')
 // Launch server
@@ -14,11 +15,16 @@ let port = process.env.PORT || 3009
 // params mysql server connection
 
 let connection = new mysql({
-  host     : 'dany-corbineau.fr',
-  user     : 'data_vision',
-  password : 'datVisPass44',
-  port: 3306,
-  database: 'au_bon_beurre',
+    host     : 'dany-corbineau.fr',
+    user     : 'data_vision',
+    password : 'datVisPass44',
+    ssl: { // SSL connection params
+        ca: fs.readFileSync(__dirname + '/certs/ca-cert.pem'),
+        key: fs.readFileSync(__dirname + '/certs/client-key.pem'),
+        cert: fs.readFileSync(__dirname + '/certs/client-cert.pem')
+    },
+    port: 3306,
+    database: 'au_bon_beurre',
 });
 
 // Middlewares
