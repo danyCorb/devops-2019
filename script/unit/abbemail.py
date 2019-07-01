@@ -4,7 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def sendEmail(msgBody):
-    try {
+    try:
         msg = MIMEMultipart()
         msg["From"] = "data-au-bon-beurre@dany-corbineau.fr"
         msg["To"] = "danycor2@hotmail.fr"
@@ -19,7 +19,6 @@ def sendEmail(msgBody):
             failed = server.sendmail("data-au-bon-beurre@dany-corbineau.fr","danycor2@hotmail.fr", msg.as_string())
             server.close()
         except Exception as e:
-            print(e)
-    }
+            print(e
     except Exception  as e:
         print('Mail Error')
