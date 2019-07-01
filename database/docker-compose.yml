@@ -14,6 +14,7 @@ services:
       - /root/devops/dev-ops-2019/database/config/config.cnf:/etc/mysql/my.cnf
       - /root/devops/dev-ops-2019/database/config/encryption.cnf:/etc/mysql/conf.d/encryption.cnf
       - /root/devops/dev-ops-2019/database/keys.enc:/etc/mysql/keys.enc
+      - /root/devops/dev-ops-2019/database/ssl/:/etc/mysql-ssl/
     
 volumes:
    DevOps_DataBase_Volume:
