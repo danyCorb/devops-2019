@@ -70,7 +70,7 @@ def dbWrite(fileContent, host, user, passwd, port):
                 insertErrorRecording(mydb, unitRecordId, automateDatas)
                 sendEmail(getErrorMsg(returnedField, fileContent["unitId"], automateDatas))
                 print('error data : '+str(automateDatas))
-            else
+            else:
                 sendMail('Unit : '+fileContent["unitId"]+' / an automate is down!')
         mydb.close()
     except NoUnitFind:
