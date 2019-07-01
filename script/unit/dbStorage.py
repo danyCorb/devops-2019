@@ -16,7 +16,6 @@ class NoUnitRecordInsert(Exception):
     pass
 
 def checkData(data, unitId):
-    # unit n°, automat n°, type auto, temp, poid
     if not checkOutLimit(data['automatId'], 1, 10):
         return 'automate Id'
     if not checkOutLimit(int(data['automatType'],16),int(0X0000BA20), int(0X0000BA2F)):
