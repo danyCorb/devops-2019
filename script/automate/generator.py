@@ -14,6 +14,8 @@ else:
     runServer = True
     if len(sys.argv) == 4:
         haveError = True
+    else:
+        haveError = False
     print("Start automate " + sys.argv[1] + " at " + sys.argv[2])
     while runServer:
         clientSocket, clientInfo = serverSocket.accept()
