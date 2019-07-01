@@ -19,6 +19,6 @@ def sendEmail(msgBody):
             failed = server.sendmail("data-au-bon-beurre@dany-corbineau.fr","danycor2@hotmail.fr", msg.as_string())
             server.close()
         except Exception as e:
-            print(e
+            print(e)
     except Exception  as e:
         print('Mail Error')
