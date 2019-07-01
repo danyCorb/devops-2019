@@ -10,6 +10,8 @@ create table site (
 )
 	ENGINE=InnoDB
 	PAGE_COMPRESSED=1
+    ENCRYPTED=YES
+    ENCRYPTION_KEY_ID=1
     ;
 
 drop table if exists automate;
@@ -22,6 +24,7 @@ create table automate (
 )
 	ENGINE=InnoDB
 	PAGE_COMPRESSED=1
+    ENCRYPTED=YES ENCRYPTION_KEY_ID=1;
     ;
 
 drop table if exists automate_recording;
@@ -46,6 +49,7 @@ create table automate_recording (
 )
 	ENGINE=InnoDB
 	PAGE_COMPRESSED=1
+    ENCRYPTED=YES ENCRYPTION_KEY_ID=1;
     ;
 
 
@@ -58,6 +62,7 @@ create table unit (
 )
 	ENGINE=InnoDB
 	PAGE_COMPRESSED=1
+    ENCRYPTED=YES ENCRYPTION_KEY_ID=1;
 ;
 
 drop table if exists unit_recording;
@@ -69,6 +74,7 @@ create table unit_recording (
 )
 	ENGINE=InnoDB
 	PAGE_COMPRESSED=1
+    ENCRYPTED=YES ENCRYPTION_KEY_ID=1;
     ;
 
 drop table if exists critical_level;
@@ -80,6 +86,7 @@ create table critical_level (
 )
 	ENGINE=InnoDB
 	PAGE_COMPRESSED=1
+    ENCRYPTED=YES ENCRYPTION_KEY_ID=1;
 ;
 
 drop table if exists critical_level_changement;
@@ -96,6 +103,7 @@ create table critical_level_changement (
 )
 	ENGINE=InnoDB
 	PAGE_COMPRESSED=1
+    ENCRYPTED=YES ENCRYPTION_KEY_ID=1;
     ;
 
 drop table if exists automate_recording_insert_error;
@@ -122,6 +130,7 @@ create table automate_recording_insert_error (
 )
 	ENGINE=InnoDB
 	PAGE_COMPRESSED=1
+    ENCRYPTED=YES ENCRYPTION_KEY_ID=1;
     ;
 
 SET FOREIGN_KEY_CHECKS=1;
