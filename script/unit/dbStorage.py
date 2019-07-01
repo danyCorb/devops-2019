@@ -23,8 +23,6 @@ def checkData(data, unitId):
         return 'automate Id'
     if checkOutLimit(int(data['automatType'],16),int(0X0000BA20), int(0X0000BA2F)):
         return 'automate type'
-    if checkOutLimit(int(unitId),1, 5):
-        return 'unitId'
     if checkOutLimit(data['tankTemperature'],0, 100):
         return 'tank temperature'
     if checkOutLimit(data['milkTankWeight'],0, 10000):
@@ -33,8 +31,8 @@ def checkData(data, unitId):
 
 def checkOutLimit(value, valMin, valMax):
     if valMin < value and valMax > value:
-        return True
-    return False
+        return False
+    return True
 
 def decrypt_datas(data):
     return data
