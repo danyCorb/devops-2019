@@ -33,8 +33,8 @@ def checkData(data, unitId):
 
 def checkOutLimit(value, valMin, valMax):
     if valMin < value and valMax > value:
-        return False
-    return True
+        return True
+    return False
 
 def decrypt_datas(data):
     return data
@@ -60,7 +60,7 @@ def dbWrite(fileContent, host, user, passwd, port):
     config = {
         'host': host, 
         'user':user, 
-        'passwd':passwd, 
+        'password':passwd, 
         'port':port, 
         'client_flags': [ClientFlag.SSL],
         'ssl_ca': './ssl/ca-cert.pem',
