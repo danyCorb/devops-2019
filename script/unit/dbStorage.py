@@ -16,6 +16,8 @@ class NoUnitRecordInsert(Exception):
     pass
 
 def checkData(data, unitId):
+    if 'automatId' not in data:
+        return False
     if not checkOutLimit(data['automatId'], 1, 10):
         return 'automate Id'
     if not checkOutLimit(int(data['automatType'],16),int(0X0000BA20), int(0X0000BA2F)):
@@ -64,10 +66,12 @@ def dbWrite(fileContent, host, user, passwd, port):
             if returnedField == True:
                 insertAutomateRecording(mydb, unitRecordId, automateDatas)
                 print('Insert Good')
-            else: 
+            elif returnedField != False: 
                 insertErrorRecording(mydb, unitRecordId, automateDatas)
                 sendEmail(getErrorMsg(returnedField, fileContent["unitId"], automateDatas))
                 print('error data : '+str(automateDatas))
+            else
+                sendMail('Unit : '+fileContent["unitId"]+' / an automate is down!')
         mydb.close()
     except NoUnitFind:
         print('No unit find in DB for '+fileContent["unitId"])
