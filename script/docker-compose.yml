@@ -2,9 +2,7 @@ version: '2'
 services:
   emailing:
     image: python:rc-alpine3.9
-    ports:
-      - "1025:1025"
-    command: python -m smtpd -c DebuggingServer -n localhost:1025
+    command: 
   automate1-1:
     build: ./automate
     ports:
@@ -43,6 +41,8 @@ services:
     build: ./unit
     volumes:
       - unit1-data:/usr/src/datas
-    command: python dbStorage.py vps691279.ovh.net docker_concentrator docConPass44 3306
+    command: 
+      - python -m smtpd -c DebuggingServer -n localhost:1025 &
+      - python dbStorage.py vps691279.ovh.net docker_concentrator docConPass44 3306
 volumes:
   unit1-data:
