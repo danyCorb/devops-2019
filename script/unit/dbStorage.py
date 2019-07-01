@@ -5,6 +5,7 @@ import sys
 from os import listdir
 import os
 from abbemail import sendEmail
+from mysql.connector.constants import ClientFlag
 
 class NoUnitFind(Exception):
     pass
@@ -56,7 +57,17 @@ def run():
         time.sleep(2)
 
 def dbWrite(fileContent, host, user, passwd, port):
-    mydb = mysql.connector.connect(host=host, user=user, passwd=passwd, port=port)
+    config = {
+        'host': host, 
+        'user':user, 
+        'passwd':passwd, 
+        'port':port, 
+        'client_flags': [ClientFlag.SSL],
+        'ssl_ca': './ssl/ca-cert.pem',
+        'ssl_key': './ssl/client-key.pem',
+        'ssl_cert': './ssl/client-cert.pem'
+    }
+    mydb = mysql.connector.connect(**config)
     try:
         unitId = getUnitId(fileContent["unitId"], mydb)
         creatingDate = fileContent['date']
