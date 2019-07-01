@@ -71,7 +71,7 @@ def dbWrite(fileContent, host, user, passwd, port):
                 sendEmail(getErrorMsg(returnedField, fileContent["unitId"], automateDatas))
                 print('error data : '+str(automateDatas))
             else:
-                sendMail('Unit : '+fileContent["unitId"]+' / an automate is down!')
+                sendEmail('Unit : '+fileContent["unitId"]+' / an automate is down!')
         mydb.close()
     except NoUnitFind:
         print('No unit find in DB for '+fileContent["unitId"])
